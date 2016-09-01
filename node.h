@@ -21,7 +21,7 @@ QColor set_color(QColor color = QColor(0,255,0,255)); // changer couleur
     enum { Type = UserType + 1 };
     int type() const Q_DECL_OVERRIDE { return Type; }
 
-    void calculateForces();
+   void calculateForces();
     bool advance();
 
     QRectF boundingRect() const Q_DECL_OVERRIDE;

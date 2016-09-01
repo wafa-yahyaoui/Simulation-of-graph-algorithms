@@ -44,6 +44,7 @@ QList<Edge *> Node::edges() const
     return edgeList;
 }
 
+
 void Node::calculateForces()
 {
     if (!scene() || scene()->mouseGrabberItem() == this) {
@@ -51,41 +52,8 @@ void Node::calculateForces()
         return;
     }
 
-    // Sum up all forces pushing this item away
-    qreal xvel = 0;
-    qreal yvel = 0;
-    foreach (QGraphicsItem *item, scene()->items()) {
-        Node *node = qgraphicsitem_cast<Node *>(item);
-        if (!node)
-            continue;
-
-        QPointF vec = mapToItem(node, 0, 0);
-        qreal dx = vec.x();
-        qreal dy = vec.y();
-        double l = 2.0 * (dx * dx + dy * dy);
-        if (l > 0) {
-            xvel += (dx * 150.0) / l;
-            yvel += (dy * 150.0) / l;
-        }
-    }
-
-    // Now subtract all forces pulling items together
-    double weight = (edgeList.size() + 1) * 10;
-    foreach (Edge *edge, edgeList) {
-        QPointF vec;
-        if (edge->sourceNode() == this)
-            vec = mapToItem(edge->destNode(), 0, 0);
-        else
-            vec = mapToItem(edge->sourceNode(), 0, 0);
-        xvel -= vec.x() / weight;
-        yvel -= vec.y() / weight;
-    }
-
-    if (qAbs(xvel) < 0.1 && qAbs(yvel) < 0.1)
-        xvel = yvel = 0;
-
     QRectF sceneRect = scene()->sceneRect();
-    newPos = pos() + QPointF(xvel, yvel);
+    newPos = pos();
     newPos.setX(qMin(qMax(newPos.x(), sceneRect.left() + 10), sceneRect.right() - 10));
     newPos.setY(qMin(qMax(newPos.y(), sceneRect.top() + 10), sceneRect.bottom() - 10));
 }

@@ -19,7 +19,7 @@ Edge::Edge(Node *sourceNode, Node *destNode,double weight)
     cost=weight;
 sourceNode->add_successor_node(destNode); // adding the destination to the list of sucessors of the source node
     source->addEdge(this);
-   // dest->addEdge(this);
+   dest->addEdge(this);
     adjust();
 }
 
