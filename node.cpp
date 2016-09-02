@@ -159,3 +159,13 @@ void Node::set_dijkstra_cost(double cout)
  {
      return node_shortest_path;
  }
+ //accessor to successor_edges list
+ QList<Edge *> Node::accessor_successor_edges() const
+ {
+     return successor_edges;
+ }
+ // add successor edge to use in algorithms
+ void Node::add_successor_edge(Edge* arc)
+ {
+    successor_edges.append(arc);
+ }

@@ -186,15 +186,22 @@ void GraphWidget::dijkstra (QString name_first_node,QString name_second_node)
     Node* second_node_pointer = find_pointer(name_second_node);
     Node* node_shortest_path_algo=first_node_pointer;
     QList<Node*> S_bar;
+   //*********test de debogage***********
+    // QList<Edge*>test0=first_node_pointer->accessor_successor_edges();
+    //QList<Edge*>::iterator test=(first_node_pointer->accessor_successor_edges()).end();
+    //************************************************************
     // initialisation
 
     first_node_pointer->set_dijkstra_cost(0);
-    for (QList<Edge*>::iterator it_edge=first_node_pointer->edges().begin();it_edge!=first_node_pointer->edges().end();it_edge++)
+    for (QList<Edge*>::iterator it_edge=(first_node_pointer->accessor_successor_edges()).begin();it_edge!=(first_node_pointer->accessor_successor_edges()).end();it_edge++)
     {
-        Node* temp1 = (*it_edge)->destNode();
+      //*** debogage **********************
+        Edge* temp0 = *it_edge;
+        Node* temp1 = temp0->destNode();
         double temp2 = (*it_edge)->edge_cost();
         temp1->set_dijkstra_cost(temp2);
-        //((*it_edge)->destNode())->set_dijkstra_cost((*it_edge)->edge_cost());
+        //***********************************
+        ((*it_edge)->destNode())->set_dijkstra_cost((*it_edge)->edge_cost());
     }
 
    /*for(it=graph_algo.begin() ; it != graph_algo.end();it++)

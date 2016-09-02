@@ -20,15 +20,17 @@ Edge::Edge(Node *sourceNode, Node *destNode,double weight)
 sourceNode->add_successor_node(destNode); // adding the destination to the list of sucessors of the source node
     source->addEdge(this);
    dest->addEdge(this);
+   source->add_successor_edge(this);
     adjust();
+
 }
 
-Node *Edge::sourceNode() const
+Node* Edge::sourceNode() const
 {
     return source;
 }
 
-Node *Edge::destNode() const
+Node* Edge::destNode() const
 {
     return dest;
 }

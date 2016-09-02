@@ -41,6 +41,10 @@ QColor set_color(QColor color = QColor(0,255,0,255)); // changer couleur
     double return_dijkstra_cost();
     //accesseur to node shortest path
     Node* accessor_node_shortest_path();
+    //accessor to successor_edges list
+    QList<Edge *> accessor_successor_edges() const;
+    // add successor edge to use in algorithms
+    void add_successor_edge(Edge* arc);
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value) Q_DECL_OVERRIDE;
 
@@ -53,6 +57,7 @@ private:
     QList<Edge *> edgeList;
     QPointF newPos;
     GraphWidget *graph;
+    QList<Edge *> successor_edges; // à utiliser dans les algoithmes
     double dijkstra_cost; // à utiliser dans l'algorithme dijkstra
 Node* node_shortest_path; // à utiliser dans plus court chemin
 
