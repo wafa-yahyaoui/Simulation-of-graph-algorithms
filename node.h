@@ -13,7 +13,7 @@ class Node : public QGraphicsItem
 {
 public:
     Node(GraphWidget *graphWidget,QString nom="ADD NAME"); // un noeud doit avoir un nom
-QColor set_color(QColor color = QColor(0,255,0,255)); // changer couleur
+//QColor set_color(QColor color = QColor(0,255,0,255)); // changer couleur
     void addEdge(Edge *edge);
     QList<Edge *> edges() const;
     void set_dijkstra_cost(double cout=0); // changer le poid du noeud lors de l'algorithme dijkstra
@@ -45,6 +45,7 @@ QColor set_color(QColor color = QColor(0,255,0,255)); // changer couleur
     QList<Edge *> accessor_successor_edges() const;
     // add successor edge to use in algorithms
     void add_successor_edge(Edge* arc);
+    void setState(int s){active=s;}; // to be used in dijkstra algorithme
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value) Q_DECL_OVERRIDE;
 
@@ -57,7 +58,8 @@ private:
     QList<Edge *> edgeList;
     QPointF newPos;
     GraphWidget *graph;
-    QList<Edge *> successor_edges; // à utiliser dans les algoithmes
+    int active; // a utilisé dans algo dijkstra
+    QList<Edge *> successor_edges; // à utiliser dans algo dijkstra
     double dijkstra_cost; // à utiliser dans l'algorithme dijkstra
 Node* node_shortest_path; // à utiliser dans plus court chemin
 
