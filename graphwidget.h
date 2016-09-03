@@ -27,6 +27,8 @@ public:
 // a method that returns the pointer to the edge using the name of destination and source
     Edge* find_edge_pointer(QString name_source, QString name_destination);
     void itemMoved();
+ // a method that reset all the graph states to 0 ===> reset colors
+    void reset();
 //+++++++++++++++ LES ALGORITHMES ++++++++++++++++++
     // 1) Dijikstra algorithmes
     void dijkstra (QString name_first_node,QString name_second_node);

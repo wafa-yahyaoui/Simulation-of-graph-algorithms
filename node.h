@@ -33,7 +33,7 @@ public:
     void add_successor_node(Node* node);
  // accesseur pour successor nodes
     QList<Node*> accessor_successor_nodes();
-    // accesseur to dijkstra cost
+    // accesseur to successor edges
 
     QList<Edge *> accessor_successor_edges() const;
     // add successor edge to use in algorithms

@@ -64,6 +64,19 @@ Edge* GraphWidget::find_edge_pointer(QString name_source, QString name_destinati
 
 }
 
+// a method that reset all the graph states to 0 ===> reset colors
+   void GraphWidget::reset()
+   {
+       for (QList<Node*>::iterator it=graph_algo.begin();it!=graph_algo.end();++it)
+       {
+           (*it)->setState(-1);
+       }
+       for (QList<Edge*>::iterator it=graph_edges.begin();it!=graph_edges.end();++it)
+       {
+           (*it)->setState(0);
+       }
+   }
+
 // adding an edge
 void GraphWidget::add_edge(QString name_source, QString name_destination, double weight)
 {
@@ -215,6 +228,7 @@ return name_min;
 // 1) Dijkstra algorithm ==============================
 void GraphWidget::dijkstra (QString name_first_node,QString name_second_node)
 {
+    reset(); // retour du graph à son état initial
     // generation des  map qui relie les noms des noeuds à des int
     QMap <QString,QString> parent;
     QMap <QString,double>dist;
