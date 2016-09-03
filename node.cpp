@@ -27,11 +27,7 @@ Node* Node::node_pointer()
 {
     return this;
 }
-// methode qui permrt de chnager de couleur
-/*QColor Node::set_color(QColor color)
-{
-    return color;
-}*/
+
 
 void Node::addEdge(Edge *edge)
 {
@@ -146,31 +142,12 @@ QString Node::node_name() const
 {
     return name;
 }
-// changer le poid du noeud lors de l'algorithme dijkstra
-void Node::set_dijkstra_cost(double cout)
-{
-   dijkstra_cost=cout;
-}
 // accesseur pour successor nodes
    QList<Node*> Node:: accessor_successor_nodes()
    {
        return successor_nodes;
    }
-   // changer l node_shortest_path
-       void Node::set_node_shortest_path(Node* noeud)
-       {
-           node_shortest_path=noeud;
-       }
- // accesseur to dijkstra cost
- double Node::return_dijkstra_cost()
- {
-     return dijkstra_cost;
- }
- //accesseur to node shortest path
- Node* Node::accessor_node_shortest_path()
- {
-     return node_shortest_path;
- }
+
  //accessor to successor_edges list
  QList<Edge *> Node::accessor_successor_edges() const
  {

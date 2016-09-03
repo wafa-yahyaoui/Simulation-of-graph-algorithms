@@ -197,7 +197,6 @@ void GraphWidget::zoomOut()
     scaleView(1 / qreal(1.2));
 }
 //++++++++++++++++++++ LES ALGORITHMES ++++++++++++++++++++++++++++
-
 QString GraphWidget::minDistance(QMap<QString,double> dist,QMap<QString,bool> sptSet)
 {
     int min = INT_MAX;
@@ -213,6 +212,7 @@ for (QMap<QString,double>::iterator it=dist.begin();it != dist.end();++it)
 }
 return name_min;
 }
+// 1) Dijkstra algorithm ==============================
 void GraphWidget::dijkstra (QString name_first_node,QString name_second_node)
 {
     // generation des  map qui relie les noms des noeuds à des int
@@ -293,114 +293,3 @@ void GraphWidget::dijkstra (QString name_first_node,QString name_second_node)
 }
 
 
-
-
-
-
-
-
-
-/*
-//1) Dijikstra algorithme
-void GraphWidget::dijkstra (QString name_first_node,QString name_second_node)
-{
-    Node* first_node_pointer = find_pointer(name_first_node);
-    Node* second_node_pointer = find_pointer(name_second_node);
-    Node* node_shortest_path_algo=first_node_pointer;
-    QList<Node*> S_bar;
-    // initialisation
-    QList<Edge*>::iterator it_edge;
-    QList<Edge*> first_node_successor_edges= first_node_pointer->accessor_successor_edges();
-    first_node_pointer->set_dijkstra_cost(0);
-    for(it_edge=first_node_successor_edges.begin();it_edge=!first_node_successor_edges.end();it_edge++);
-         {
-         Node* node= (*it_edge)->destNode();
-         double edge_cost = (*it_edge)->edge_cost();
-         node->set_dijkstra_cost(edge_cost);
-
-
-         }
-
-   for(it=graph_algo.begin() ; it != graph_algo.end();it++)
-    {
-
-
-        if (*it== first_node_pointer)
-        {
-            S_bar.push_back(*it);
-            (*it)->set_dijkstra_cost(0);
-        }
-        else if (first_node_pointer->accessor_successor_nodes().contains(*it ))
-        {
-
-
-           for(it_edge=(first_node_pointer->edges()).begin();it_edge != (first_node_pointer->edges()).end();it_edge ++)
-            {
-              if ( *it==(*itedge)->destNode())
-                {
-                   (*it)->set_dijkstra_cost((*it_edge)->edge_cost());
-                }
-          }
-        }
-
-        else
-        {
-           S_bar.push_back(*it);
-            (*it)->set_dijkstra_cost(10000000000000);
-        }
-    }
-
-    while(!S_bar.empty())
-    {
-        //recherche du minimum
-        double min=1000000000000;
-
-        for (QList <Node*>::iterator it=S_bar.begin();it != S_bar.end();it++) // recherche du minimum
-        {
-            if ((*it)->return_dijkstra_cost() <=min)
-            {
-                min=(*it)->return_dijkstra_cost();
-                min_pos=it;
-            }
-        }
-
-        (*min_pos)-> set_node_shortest_path(node_shortest_path_algo);
-        S_bar.erase(min_pos);
-        if (S_bar.isEmpty())// sotie de la la boucle si S bar est vide
-        {
-            break;
-        }
-        // 3eme etape du l'algo , on va definir un itérateur pour edges puisk on a besoi de parcouir les arcs
-        for(QList<Node*>::iterator it=((*min_pos)->accessor_successor_nodes()).begin();it !=((*min_pos)->accessor_successor_nodes()).end();it++)
-        {
-            if (S_bar.contains(*it))
-            {
-                for(QList<Edge*>::iterator it_edge=(*min_pos)->edges().begin();it_edge != (*min_pos)->edges().end();it_edge ++)
-                {
-                    if ( (*it==(*it_edge)->destNode()) && (((*min_pos)->return_dijkstra_cost() + (*it_edge)->edge_cost())> ((*it)->return_dijkstra_cost()) ) )
-                    {
-                        (*it)->set_dijkstra_cost((*min_pos)->return_dijkstra_cost() + (*it_edge)->edge_cost());
-                    }
-                }
-
-
-        }
-
-
-        }
-        }
-
-   Node* noeud_a_colorier = second_node_pointer;
-// Colorier le plus court chemin
-    do
-   {
-
-       noeud_a_colorier->set_color(QColor(0,0,255,127));
-        noeud_a_colorier->set_color(QColor(0,0,255,127));
-   noeud_a_colorier=noeud_a_colorier->accessor_node_shortest_path();
-   }
-   while (noeud_a_colorier != first_node_pointer);
-
-
-}
-*/
