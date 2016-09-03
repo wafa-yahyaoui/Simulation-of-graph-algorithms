@@ -8,14 +8,15 @@ class Node;
 class Edge : public QGraphicsItem
 {
 public:
-    Edge(Node *sourceNode, Node *destNode, double weight=0);
+Edge(Node *sourceNode, Node *destNode, double weight=0);
 Node *sourceNode() const;
 Node *destNode() const;
-double edge_cost() const; // adding an accessor to the edge cost
-    void adjust();
-
-    enum { Type = UserType + 2 };
-    int type() const Q_DECL_OVERRIDE { return Type; }
+double edge_cost() const; //  an accessor to the edge cost
+Edge* edge_pointer(); // an accessor to the pointer "this"
+void setState(int i){state=i;}; // to be used in algorithmes
+void adjust();
+enum { Type = UserType + 2 };
+int type() const Q_DECL_OVERRIDE { return Type; }
 
 
 protected:
@@ -25,7 +26,8 @@ protected:
 private:
     Node *source, *dest;
     double cost; // a node has a cost
- QPointF sourcePoint;
+    int state; // to be used in algorithms
+    QPointF sourcePoint;
     QPointF destPoint;
     qreal arrowSize;
 };

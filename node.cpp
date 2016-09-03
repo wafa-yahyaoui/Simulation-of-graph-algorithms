@@ -28,10 +28,10 @@ Node* Node::node_pointer()
     return this;
 }
 // methode qui permrt de chnager de couleur
-QColor Node::set_color(QColor color)
+/*QColor Node::set_color(QColor color)
 {
     return color;
-}
+}*/
 
 void Node::addEdge(Edge *edge)
 {
@@ -83,18 +83,30 @@ QPainterPath Node::shape() const
 void Node::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *)
 {
     painter->setPen(Qt::NoPen);
-    painter->setBrush(Qt::darkGray);
-    painter->drawEllipse(-7, -7, 20, 20);
+   // painter->setBrush(Qt::darkGray);
+    //painter->drawEllipse(-7, -7, 20, 20);
 
-    QRadialGradient gradient(-3, -3, 10);
+    QRadialGradient gradient(-3, -3, 15);
+    gradient.setCenter(3, 3);
+    gradient.setFocalPoint(3, 3);
     if (option->state & QStyle::State_Sunken) {
-        gradient.setCenter(3, 3);
-        gradient.setFocalPoint(3, 3);
-        gradient.setColorAt(1, set_color()); //changer de couleur
-        gradient.setColorAt(0, set_color());
-    } else {
-        gradient.setColorAt(0, set_color());
-        gradient.setColorAt(1, set_color());
+        gradient.setColorAt(1, QColor(Qt::yellow).light(120));
+        gradient.setColorAt(0, QColor(Qt::darkYellow).light(120));
+    }
+    else if (active==1)
+    {
+        gradient.setColorAt(1, QColor(Qt::green));
+        gradient.setColorAt(0, QColor(Qt::darkGreen));
+    }
+    else if (active==0)
+    {
+        gradient.setColorAt(0, Qt::gray);
+        gradient.setColorAt(1, Qt::darkGray);
+    }
+    else
+    {
+        gradient.setColorAt(0, Qt::yellow);
+        gradient.setColorAt(1, Qt::darkYellow);
     }
     painter->setBrush(gradient);
 
@@ -158,4 +170,14 @@ void Node::set_dijkstra_cost(double cout)
  Node* Node::accessor_node_shortest_path()
  {
      return node_shortest_path;
+ }
+ //accessor to successor_edges list
+ QList<Edge *> Node::accessor_successor_edges() const
+ {
+     return successor_edges;
+ }
+ // add successor edge to use in algorithms
+ void Node::add_successor_edge(Edge* arc)
+ {
+    successor_edges.append(arc);
  }

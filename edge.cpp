@@ -14,25 +14,32 @@ Edge::Edge(Node *sourceNode, Node *destNode,double weight)
     : arrowSize(10)
 {
     setAcceptedMouseButtons(0);
+    state=0;
     source = sourceNode;
     dest = destNode;
     cost=weight;
 sourceNode->add_successor_node(destNode); // adding the destination to the list of sucessors of the source node
     source->addEdge(this);
    dest->addEdge(this);
+   source->add_successor_edge(this);
     adjust();
+
 }
 
-Node *Edge::sourceNode() const
+Node* Edge::sourceNode() const
 {
     return source;
 }
 
-Node *Edge::destNode() const
+Node* Edge::destNode() const
 {
     return dest;
 }
 
+Edge* Edge::edge_pointer() // an accessor to the pointer "this"
+{
+    return this;
+}
 void Edge::adjust()
 {
     if (!source || !dest)
@@ -52,7 +59,7 @@ void Edge::adjust()
     }
 }
 
-//===== adding accessor to the cost
+//accessor to the cost
 double Edge::edge_cost() const
 {
     return cost;
@@ -85,7 +92,18 @@ void Edge::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
         return;
 
     // Draw the line itself
-    painter->setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    if (state==1)
+    {
+        painter->setPen(QPen(Qt::green, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    }
+    else if (state==-1)
+    {
+        painter->setPen(QPen(Qt::red, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    }
+    else
+    {
+        painter->setPen(QPen(Qt::black, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    }
     painter->drawLine(line);
     // drawing the cost of the edge
    painter->drawText( QPoint((sourcePoint.x()+destPoint.x())/2,(destPoint.y()+sourcePoint.y())/2),QString::number(cost)  );
@@ -99,7 +117,15 @@ void Edge::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
     QPointF destArrowP2 = destPoint + QPointF(sin(angle - Pi + Pi / 3) * arrowSize,
                                               cos(angle - Pi + Pi / 3) * arrowSize);
 
-    painter->setBrush(Qt::black);
+    if (state==1){
+        painter->setBrush(Qt::green);
+    }
+    else if (state==-1){
+        painter->setBrush(Qt::red);
+    }
+    else{
+        painter->setBrush(Qt::black);
+    }
     //painter->drawPolygon(QPolygonF() << line.p1() << sourceArrowP1 << sourceArrowP2);
     painter->drawPolygon(QPolygonF() << line.p2() << destArrowP1 << destArrowP2);
 }
