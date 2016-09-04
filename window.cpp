@@ -15,7 +15,8 @@ QAction *shortest_path= new QAction("Shortest path : Dijksta algorithm", this);
             menu->addAction(shortest_path);
 QAction *BFS= new QAction("Breadth First Search", this);
                 menu->addAction(BFS);
-
+QAction *DFS= new QAction("Deapth First Search", this);
+                                menu->addAction(DFS);
 QAction *quit_application= new QAction("Quit", this);
                 menu->addAction(quit_application);
 
@@ -25,12 +26,14 @@ add_a_node->setShortcut(QKeySequence("Ctrl+N"));
 add_an_edge->setShortcut(QKeySequence("Ctrl+E"));
 shortest_path->setShortcut(QKeySequence("Ctrl+D"));
 BFS->setShortcut(QKeySequence("Ctrl+B"));
+DFS->setShortcut(QKeySequence("Ctrl+F"));
 
 
 // Connecter les signaux et les slots
 connect(quit_application, SIGNAL(triggered()), qApp, SLOT(quit()));
 connect(add_a_node, &QAction::triggered, this, &window::open_window_add_node);
 connect(BFS, &QAction::triggered, this, &window::open_window_bfs_algorithm);
+connect(DFS, &QAction::triggered, this, &window::open_window_dfs_algorithm);
 connect(add_an_edge, &QAction::triggered, this, &window::open_window_add_edge);
 connect(shortest_path, &QAction::triggered, this, &window::open_window_dijkstra_algorithm);
 }
@@ -166,3 +169,17 @@ void window::open_window_add_edge()
 
 }
 
+//*********************** DFS***********************
+void window::open_window_dfs_algorithm()
+{
+    bool ok = false;
+  QString origine = QInputDialog::getText(this, "DFS Algorithm", "type the origine node's name",QLineEdit::Normal, QString(),&ok);
+  if (ok && !origine.isEmpty() && existing_name_nodes.contains(origine))
+   {
+      graph->dfs(origine);
+    }
+  else if(ok && !origine.isEmpty() && !existing_name_nodes.contains(origine))
+  {
+      QMessageBox::critical(this, "Origine not found", "The node you typed does not exist, try again !");
+  }
+}

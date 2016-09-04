@@ -309,7 +309,7 @@ void GraphWidget::dijkstra (QString name_first_node,QString name_second_node)
     Shortest_Path[0]->update();
     wait(1000);
 }
-//1) Parcours en largeur
+//1) Parcours largeur
 void GraphWidget::bfs(QString name_start_node)
 {
     reset(); // retour du graph à son etat intial
@@ -344,3 +344,35 @@ void GraphWidget::bfs(QString name_start_node)
     pointer_start_node->update();
 }
 
+// 2) Parcours Pronfondeur
+void GraphWidget::dfs(QString name_start_node)
+{
+    QStack<Node *> s;
+    Node *pointer_start_node= find_pointer(name_start_node);
+    s.push(pointer_start_node);
+    pointer_start_node->setExplored(true);
+    while (!s.isEmpty())
+    {
+        Node *node_exploration_done = s.pop();
+        node_exploration_done->setState(1);
+        if(node_exploration_done->node_name()!= name_start_node)
+        {
+            pointer_start_node->setState(0);
+            pointer_start_node->update();
+        }
+        node_exploration_done->update();
+        for(int i=node_exploration_done->accessor_successor_edges().size()-1; i>=0;i--)
+        {
+            if (!node_exploration_done->accessor_successor_edges()[i]->destNode()->isExplored())
+            {
+                s.push(node_exploration_done->accessor_successor_edges()[i]->destNode());
+                node_exploration_done->accessor_successor_edges()[i]->destNode()->setExplored(true);
+            }
+        }
+        name_start_node=node_exploration_done->node_name();
+        pointer_start_node=find_pointer(name_start_node);
+        wait(2000);
+    }
+    pointer_start_node->setState(0);
+    pointer_start_node->update();
+}

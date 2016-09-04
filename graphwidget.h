@@ -7,6 +7,7 @@
 #include <QMap>
 #include <climits>
 #include <QQueue>
+#include<QStack>
 
 class Node;
 class Edge;
@@ -32,8 +33,10 @@ public:
 //+++++++++++++++ LES ALGORITHMES ++++++++++++++++++
     // 1) Dijikstra algorithmes
     void dijkstra (QString name_first_node,QString name_second_node);
-    //1) Parcours en largeur
+    //2) Parcours largeur
     void bfs(QString name_start_node);
+    //3) Parcours profondeur
+    void dfs(QString name_start_node);
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
 public slots:
     void shuffle();
