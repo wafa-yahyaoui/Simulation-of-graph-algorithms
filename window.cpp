@@ -13,8 +13,8 @@ QAction *add_an_edge= new QAction("Add edge", this);
         menu->addAction(add_an_edge);
 QAction *shortest_path= new QAction("Shortest path : Dijksta algorithm", this);
             menu->addAction(shortest_path);
-QAction *delete_a_node= new QAction("Delete node", this);
-                menu->addAction(delete_a_node);
+QAction *BFS= new QAction("Breadth First Search", this);
+                menu->addAction(BFS);
 
 QAction *quit_application= new QAction("Quit", this);
                 menu->addAction(quit_application);
@@ -24,13 +24,13 @@ quit_application->setShortcut(QKeySequence("Ctrl+Q"));
 add_a_node->setShortcut(QKeySequence("Ctrl+N"));
 add_an_edge->setShortcut(QKeySequence("Ctrl+E"));
 shortest_path->setShortcut(QKeySequence("Ctrl+D"));
-delete_a_node->setShortcut(QKeySequence("Ctrl+C"));
+BFS->setShortcut(QKeySequence("Ctrl+B"));
 
 
 // Connecter les signaux et les slots
 connect(quit_application, SIGNAL(triggered()), qApp, SLOT(quit()));
 connect(add_a_node, &QAction::triggered, this, &window::open_window_add_node);
-//connect(shortest_path, &QAction::triggered, this, &window::open_window_dijkstra_algorithm);
+connect(BFS, &QAction::triggered, this, &window::open_window_bfs_algorithm);
 connect(add_an_edge, &QAction::triggered, this, &window::open_window_add_edge);
 connect(shortest_path, &QAction::triggered, this, &window::open_window_dijkstra_algorithm);
 }
@@ -99,10 +99,19 @@ void window::open_window_dijkstra_algorithm()
 
     }
 
-
-void window::open_window_delete_edge()
+//*********************** BFS algorithme ********************
+void window::open_window_bfs_algorithm()
 {
-    fenetre_delete_edge.exec();
+    bool ok = false;
+  QString origine = QInputDialog::getText(this, "BFS Algorithm", "type the origine node's name",QLineEdit::Normal, QString(),&ok);
+  if (ok && !origine.isEmpty() && existing_name_nodes.contains(origine))
+   {
+      graph->bfs(origine);
+    }
+  else if(ok && !origine.isEmpty() && !existing_name_nodes.contains(origine))
+  {
+      QMessageBox::critical(this, "Origine not found", "The node you typed does not exist, try again !");
+  }
 }
 
 // ****************** Add edge  ****************

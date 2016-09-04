@@ -4,9 +4,9 @@
 #include <QString>
 #include <QList>
 #include <iterator>
-#include <QTableWidget>
 #include <QMap>
 #include <climits>
+#include <QQueue>
 
 class Node;
 class Edge;
@@ -32,6 +32,8 @@ public:
 //+++++++++++++++ LES ALGORITHMES ++++++++++++++++++
     // 1) Dijikstra algorithmes
     void dijkstra (QString name_first_node,QString name_second_node);
+    //1) Parcours en largeur
+    void bfs(QString name_start_node);
 //++++++++++++++++++++++++++++++++++++++++++++++++++++
 public slots:
     void shuffle();
@@ -54,7 +56,6 @@ private:
     // adding other  implementations of the graph to be used in algorthms
     QList<Node*> graph_algo;
     QList<Edge*> graph_edges; // containes all the graph edges
-    QTableWidget* graph_algo_table;
     //===== attributes to be used in simulation
     QString minDistance(QMap<QString,double> dist,QMap<QString,bool> sptSet);
 };

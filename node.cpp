@@ -10,6 +10,7 @@ Node::Node(GraphWidget *graphWidget, QString nom)
     : graph(graphWidget)
 {
     name = nom;
+    active=-1;
     setFlag(ItemIsMovable);
     setFlag(ItemSendsGeometryChanges);
     setCacheMode(DeviceCoordinateCache);
@@ -99,7 +100,7 @@ void Node::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
         gradient.setColorAt(0, Qt::gray);
         gradient.setColorAt(1, Qt::darkGray);
     }
-    else
+    else if (active==-1)
     {
         gradient.setColorAt(0, Qt::yellow);
         gradient.setColorAt(1, Qt::darkYellow);

@@ -34,11 +34,14 @@ public:
  // accesseur pour successor nodes
     QList<Node*> accessor_successor_nodes();
     // accesseur to successor edges
-
     QList<Edge *> accessor_successor_edges() const;
     // add successor edge to use in algorithms
     void add_successor_edge(Edge* arc);
     void setState(int s){active=s;}; // to be used in dijkstra algorithme
+    void setExplored(bool state){explored=state;}; // to be used in bfs; dfs algorithmes
+    bool isExplored(){return explored;};// to be used in bfs;dfs algorithmes
+
+
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value) Q_DECL_OVERRIDE;
 
@@ -48,12 +51,12 @@ protected:
 private:
     QString name; // un noeud sera caractérisé par un nom
     QList<Node*> successor_nodes; // chaque noeud aura une liste qui contient ses suivants
-    QList<Edge *> edgeList;
+    QList<Edge *> edgeList; // liste de tous  les edges
     QPointF newPos;
     GraphWidget *graph;
     int active; // a utilisé dans algo dijkstra
     QList<Edge *> successor_edges; // à utiliser dans algo dijkstra
-
+    bool explored; // to be used in bfs; dfs algorithms
 
 };
 

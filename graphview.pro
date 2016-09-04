@@ -5,7 +5,6 @@ HEADERS += \
         node.h \
         graphwidget.h \
     window.h \
-    window_delete_edge.h \
     wait.h
 
 SOURCES += \
@@ -14,7 +13,6 @@ SOURCES += \
         node.cpp \
         graphwidget.cpp \
     window.cpp \
-    window_delete_edge.cpp \
     wait.cpp
 
 # install

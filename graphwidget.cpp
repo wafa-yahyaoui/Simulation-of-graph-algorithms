@@ -64,12 +64,16 @@ Edge* GraphWidget::find_edge_pointer(QString name_source, QString name_destinati
 
 }
 
-// a method that reset all the graph states to 0 ===> reset colors
+// a method that reset all the graph states to 0 and explored to false ===> reset colors
    void GraphWidget::reset()
    {
        for (QList<Node*>::iterator it=graph_algo.begin();it!=graph_algo.end();++it)
        {
            (*it)->setState(-1);
+           (*it)->setExplored(false);
+           (*it)->update();
+
+
        }
        for (QList<Edge*>::iterator it=graph_edges.begin();it!=graph_edges.end();++it)
        {
@@ -305,5 +309,38 @@ void GraphWidget::dijkstra (QString name_first_node,QString name_second_node)
     Shortest_Path[0]->update();
     wait(1000);
 }
-
+//1) Parcours en largeur
+void GraphWidget::bfs(QString name_start_node)
+{
+    reset(); // retour du graph à son etat intial
+    QQueue<Node *> Q;
+    Node *pointer_start_node = find_pointer(name_start_node);
+    Q.enqueue(pointer_start_node);
+    pointer_start_node->setExplored(true);
+    while (!Q.isEmpty())
+    {
+        Node *node_exploration_done = Q.dequeue();
+        node_exploration_done->setState(1);
+        if(node_exploration_done->node_name()!=name_start_node)
+        {
+            pointer_start_node->setState(0);
+            pointer_start_node->update();
+        }
+        node_exploration_done->update();
+        foreach(Edge* e,node_exploration_done->accessor_successor_edges())
+        {
+            if (!e->destNode()->isExplored())
+            {
+                Q.enqueue(e->destNode());
+                e->destNode()->setExplored(true);
+            }
+        }
+        name_start_node=node_exploration_done->node_name();
+        pointer_start_node=find_pointer(name_start_node);
+         pointer_start_node->setExplored(true);
+        wait(2000);
+    }
+    pointer_start_node->setState(0);
+    pointer_start_node->update();
+}
 
