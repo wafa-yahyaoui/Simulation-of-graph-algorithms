@@ -64,6 +64,24 @@ Edge* GraphWidget::find_edge_pointer(QString name_source, QString name_destinati
 
 }
 
+// a method that verify the existence of the edge using the name of destination and source
+bool GraphWidget::verify_edge_existence(QString name_source, QString name_destination)
+{
+    Node* pointer_name_source = find_pointer(name_source);
+    Node* pointer_name_destination = find_pointer(name_destination);
+    bool b=false;
+    for(QList<Edge*>::iterator it = graph_edges.begin();it!= graph_edges.end();++it)
+    {
+        if ((*it)->destNode()==pointer_name_destination && (*it)->sourceNode()==pointer_name_source)
+        {
+            b=true;
+            break;
+        }
+    }
+    return b;
+
+}
+
 // a method that reset all the graph states to 0 and explored to false ===> reset colors
    void GraphWidget::reset()
    {
@@ -347,6 +365,7 @@ void GraphWidget::bfs(QString name_start_node)
 // 2) Parcours Pronfondeur
 void GraphWidget::dfs(QString name_start_node)
 {
+    reset();
     QStack<Node *> s;
     Node *pointer_start_node= find_pointer(name_start_node);
     s.push(pointer_start_node);

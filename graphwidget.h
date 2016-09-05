@@ -30,6 +30,8 @@ public:
     void itemMoved();
  // a method that reset all the graph states to 0 ===> reset colors
     void reset();
+ // a method that verify the existence of the edge using the name of destination and source
+ bool verify_edge_existence(QString name_source, QString name_destination);
 //+++++++++++++++ LES ALGORITHMES ++++++++++++++++++
     // 1) Dijikstra algorithmes
     void dijkstra (QString name_first_node,QString name_second_node);
