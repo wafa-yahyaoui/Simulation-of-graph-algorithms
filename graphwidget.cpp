@@ -347,6 +347,7 @@ void GraphWidget::bfs(QString name_start_node)
 // 2) Parcours Pronfondeur
 void GraphWidget::dfs(QString name_start_node)
 {
+    reset();
     QStack<Node *> s;
     Node *pointer_start_node= find_pointer(name_start_node);
     s.push(pointer_start_node);
