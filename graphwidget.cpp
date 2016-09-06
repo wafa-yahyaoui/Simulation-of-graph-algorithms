@@ -22,7 +22,6 @@ GraphWidget::GraphWidget(QWidget *parent)
 
 }
 // Adding a  node
-
 void GraphWidget::add_node(QString name)
 {
 // add node to the scene and also to graph_algo
@@ -33,7 +32,12 @@ void GraphWidget::add_node(QString name)
 scene_att->addItem(node);
 node->setPos(0,0);
 }
+// a methode that delete an edge given the source node and destination node
+void GraphWidget::delete_edge(QString source_edge_to_delete ,QString destination_edge_to_delete)
+{
+    Edge* pointer_edge_delete=find_edge_pointer(source_edge_to_delete,destination_edge_to_delete)
 
+}
 
 // a method that returns the pointer to the node using its name
     Node* GraphWidget::find_pointer(QString nom)

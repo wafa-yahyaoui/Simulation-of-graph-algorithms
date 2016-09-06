@@ -32,6 +32,8 @@ public:
     void reset();
  // a method that verify the existence of the edge using the name of destination and source
  bool verify_edge_existence(QString name_source, QString name_destination);
+ // a methode that delete an edge given the source node and destination node
+ void delete_edge(QString source_edge_to_delete ,QString destination_edge_to_delete);
 //+++++++++++++++ LES ALGORITHMES ++++++++++++++++++
     // 1) Dijikstra algorithmes
     void dijkstra (QString name_first_node,QString name_second_node);
