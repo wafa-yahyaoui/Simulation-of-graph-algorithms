@@ -35,7 +35,7 @@ node->setPos(0,0);
 // a methode that delete an edge given the source node and destination node
 void GraphWidget::delete_edge(QString source_edge_to_delete ,QString destination_edge_to_delete)
 {
-    Edge* pointer_edge_delete=find_edge_pointer(source_edge_to_delete,destination_edge_to_delete)
+    Edge* pointer_edge_delete=find_edge_pointer(source_edge_to_delete,destination_edge_to_delete);
 
 }
 

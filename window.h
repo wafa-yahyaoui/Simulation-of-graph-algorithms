@@ -20,6 +20,7 @@ public slots:
    void open_window_add_edge();
    void open_window_bfs_algorithm();
    void open_window_dfs_algorithm();
+   void open_window_delete_edge();
 private:
     GraphWidget *graph;
     QList<QString> existing_name_nodes;
