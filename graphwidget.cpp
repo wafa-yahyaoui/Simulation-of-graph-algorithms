@@ -32,14 +32,15 @@ void GraphWidget::add_node(QString name)
 scene_att->addItem(node);
 node->setPos(0,0);
 }
-// a methode that delete an edge given the source node and destination node
+// a methode that delete an edge given the source node and destination node (after verification )
 void GraphWidget::delete_edge(QString source_edge_to_delete ,QString destination_edge_to_delete)
 {
     Edge* pointer_edge_delete=find_edge_pointer(source_edge_to_delete,destination_edge_to_delete);
 
+
 }
 
-// a method that returns the pointer to the node using its name
+// a method that returns the pointer to the node using its name destination and name source (after verificat)
     Node* GraphWidget::find_pointer(QString nom)
     {
         QList<Node*>::iterator it=graph_algo.begin();

@@ -23,6 +23,13 @@ void Node::add_successor_node(Node* node)
 {
     successor_nodes.append(node);
 }
+// method to delete a successor node
+   void Node::delete_successor_node(Node* node )
+   {
+        successor_nodes.removeOne(node);
+   }
+
+
 // an accessor to the pointer on the node
 Node* Node::node_pointer()
 {
@@ -33,6 +40,11 @@ Node* Node::node_pointer()
 void Node::addEdge(Edge *edge)
 {
     edgeList << edge;
+    edge->adjust();
+}
+void Node::dellEdge(Edge *edge) // dessin +algo
+{
+    edgeList.removeOne(edge);
     edge->adjust();
 }
 

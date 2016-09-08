@@ -13,8 +13,10 @@ class Node : public QGraphicsItem
 {
 public:
     Node(GraphWidget *graphWidget,QString nom="ADD NAME"); // un noeud doit avoir un nom
-    void addEdge(Edge *edge);
+    void addEdge(Edge *edge); // dessin +algo
+    void dellEdge(Edge *edge); // dessin +algo
     QList<Edge *> edges() const;
+    void
 
     enum { Type = UserType + 1 };
     int type() const Q_DECL_OVERRIDE { return Type; }
@@ -31,6 +33,8 @@ public:
     Node* node_pointer();
 // methode to add a successor node
     void add_successor_node(Node* node);
+ // method to delete a successor node
+    void delete_successor_node(Node* node );
  // accesseur pour successor nodes
     QList<Node*> accessor_successor_nodes();
     // accesseur to successor edges
