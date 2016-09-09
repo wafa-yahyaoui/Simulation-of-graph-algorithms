@@ -13,8 +13,10 @@ class Node : public QGraphicsItem
 {
 public:
     Node(GraphWidget *graphWidget,QString nom="ADD NAME"); // un noeud doit avoir un nom
-    void addEdge(Edge *edge);
+    void addEdge(Edge *edge); // dessin +algo
+    void dellEdge(Edge *edge); // dessin +algo
     QList<Edge *> edges() const;
+
 
     enum { Type = UserType + 1 };
     int type() const Q_DECL_OVERRIDE { return Type; }
@@ -31,12 +33,16 @@ public:
     Node* node_pointer();
 // methode to add a successor node
     void add_successor_node(Node* node);
+ // method to delete a successor node
+    void delete_successor_node(Node* node );
  // accesseur pour successor nodes
     QList<Node*> accessor_successor_nodes();
     // accesseur to successor edges
     QList<Edge *> accessor_successor_edges() const;
     // add successor edge to use in algorithms
     void add_successor_edge(Edge* arc);
+    // a method to delete a successor edge
+    void delete_successor_edge(Edge* arc);
     void setState(int s){active=s;}; // to be used in dijkstra algorithme
     void setExplored(bool state){explored=state;}; // to be used in bfs; dfs algorithmes
     bool isExplored(){return explored;};// to be used in bfs;dfs algorithmes

@@ -14,7 +14,6 @@ SOURCES += \
         graphwidget.cpp \
     window.cpp \
     wait.cpp
-
 # install
 target.path = $$[QT_INSTALL_EXAMPLES]/widgets/graphicsview/elasticnodes
 INSTALLS += target

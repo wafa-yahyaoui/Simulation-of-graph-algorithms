@@ -22,7 +22,6 @@ GraphWidget::GraphWidget(QWidget *parent)
 
 }
 // Adding a  node
-
 void GraphWidget::add_node(QString name)
 {
 // add node to the scene and also to graph_algo
@@ -33,9 +32,23 @@ void GraphWidget::add_node(QString name)
 scene_att->addItem(node);
 node->setPos(0,0);
 }
+// a methode that delete an edge given the source node and destination node (after verification )
+void GraphWidget::delete_edge(QString source_edge_to_delete ,QString destination_edge_to_delete)
+{
+    Edge* pointer_edge_delete=find_edge_pointer(source_edge_to_delete,destination_edge_to_delete);
+graph_edges.removeOne(pointer_edge_delete);
+find_pointer(source_edge_to_delete)->delete_successor_node(find_pointer(destination_edge_to_delete));
+find_pointer(source_edge_to_delete)->dellEdge(pointer_edge_delete);
+find_pointer(destination_edge_to_delete)->dellEdge(pointer_edge_delete);
+find_pointer(source_edge_to_delete)->delete_successor_edge(pointer_edge_delete);
+scene_att->removeItem(pointer_edge_delete);
+delete pointer_edge_delete;
+pointer_edge_delete=NULL;
 
 
-// a method that returns the pointer to the node using its name
+}
+
+// a method that returns the pointer to the node using its name destination and name source (after verificat)
     Node* GraphWidget::find_pointer(QString nom)
     {
         QList<Node*>::iterator it=graph_algo.begin();
@@ -61,6 +74,24 @@ Edge* GraphWidget::find_edge_pointer(QString name_source, QString name_destinati
         }
     }
     return pointer_to_edge;
+
+}
+
+// a method that verify the existence of the edge using the name of destination and source
+bool GraphWidget::verify_edge_existence(QString name_source, QString name_destination)
+{
+    Node* pointer_name_source = find_pointer(name_source);
+    Node* pointer_name_destination = find_pointer(name_destination);
+    bool b=false;
+    for(QList<Edge*>::iterator it = graph_edges.begin();it!= graph_edges.end();++it)
+    {
+        if ((*it)->destNode()==pointer_name_destination && (*it)->sourceNode()==pointer_name_source)
+        {
+            b=true;
+            break;
+        }
+    }
+    return b;
 
 }
 

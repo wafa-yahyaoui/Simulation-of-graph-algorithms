@@ -11,6 +11,8 @@ QAction *add_a_node= new QAction("Add node", this);
     menu->addAction(add_a_node);
 QAction *add_an_edge= new QAction("Add edge", this);
         menu->addAction(add_an_edge);
+QAction *delete_an_edge= new QAction("Delete edge", this);
+                menu->addAction(delete_an_edge);
 QAction *shortest_path= new QAction("Shortest path : Dijksta algorithm", this);
             menu->addAction(shortest_path);
 QAction *BFS= new QAction("Breadth First Search", this);
@@ -24,6 +26,7 @@ QAction *quit_application= new QAction("Quit", this);
 quit_application->setShortcut(QKeySequence("Ctrl+Q"));
 add_a_node->setShortcut(QKeySequence("Ctrl+N"));
 add_an_edge->setShortcut(QKeySequence("Ctrl+E"));
+delete_an_edge->setShortcut(QKeySequence("Ctrl+L"));
 shortest_path->setShortcut(QKeySequence("Ctrl+D"));
 BFS->setShortcut(QKeySequence("Ctrl+B"));
 DFS->setShortcut(QKeySequence("Ctrl+F"));
@@ -36,6 +39,7 @@ connect(BFS, &QAction::triggered, this, &window::open_window_bfs_algorithm);
 connect(DFS, &QAction::triggered, this, &window::open_window_dfs_algorithm);
 connect(add_an_edge, &QAction::triggered, this, &window::open_window_add_edge);
 connect(shortest_path, &QAction::triggered, this, &window::open_window_dijkstra_algorithm);
+connect(delete_an_edge, &QAction::triggered, this, &window::open_window_delete_edge);
 }
 //==============generer les slots===================
 void window::open_window_add_node()//windo to  Add new node
@@ -183,3 +187,47 @@ void window::open_window_dfs_algorithm()
       QMessageBox::critical(this, "Origine not found", "The node you typed does not exist, try again !");
   }
 }
+
+//********************** delete edge ****************
+void window::open_window_delete_edge()
+{
+    QString origine_edge_to_delete;
+    QString destination_edge_to_delete;
+    bool ok = false;
+  origine_edge_to_delete = QInputDialog::getText(this, "DELETE EDGE", "Type the name of origine node",QLineEdit::Normal, QString(),&ok);
+  if (ok && !origine_edge_to_delete.isEmpty() && existing_name_nodes.contains(origine_edge_to_delete))
+   {
+      ok=false;
+      destination_edge_to_delete = QInputDialog::getText(this, "DELETE EDGE", "Type the name of destination node",QLineEdit::Normal, QString(),&ok);
+      if (ok && !destination_edge_to_delete.isEmpty() &&existing_name_nodes.contains(destination_edge_to_delete) && (origine_edge_to_delete.compare(destination_edge_to_delete) != 0))
+      {
+          if(graph->verify_edge_existence(origine_edge_to_delete,destination_edge_to_delete))
+          {
+             graph->delete_edge(origine_edge_to_delete,destination_edge_to_delete);
+      }
+          else
+          {
+               QMessageBox::critical(this, "No Edge ", "No Edge between chosen nodes !");
+          }
+}
+
+
+      else if (ok && !destination_edge_to_delete.isEmpty() && !existing_name_nodes.contains(destination_edge_to_delete))
+      {
+           QMessageBox::critical(this, "Node not found", "Destination node does not exist !");
+      }
+      else if (ok && !destination_edge_to_delete.isEmpty() && (origine_edge_to_delete.compare(destination_edge_to_delete) == 0) )
+      {
+           QMessageBox::critical(this, "Same node used ", "destination node and origine node should not be the same !");
+      }
+
+
+    }
+  else if (ok && !origine_edge_to_delete.isEmpty() && !existing_name_nodes.contains(origine_edge_to_delete))
+  {
+       QMessageBox::critical(this, "Node not found", "Origine node does not exist !");
+  }
+
+}
+
+

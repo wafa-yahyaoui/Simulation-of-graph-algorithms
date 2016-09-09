@@ -23,6 +23,13 @@ void Node::add_successor_node(Node* node)
 {
     successor_nodes.append(node);
 }
+// method to delete a successor node
+   void Node::delete_successor_node(Node* node )
+   {
+        successor_nodes.removeOne(node);
+   }
+
+
 // an accessor to the pointer on the node
 Node* Node::node_pointer()
 {
@@ -30,9 +37,14 @@ Node* Node::node_pointer()
 }
 
 
-void Node::addEdge(Edge *edge)
+void Node::addEdge(Edge *edge) // dessin
 {
     edgeList << edge;
+    edge->adjust();
+}
+void Node::dellEdge(Edge *edge) // dessin +algo
+{
+    edgeList.removeOne(edge);
     edge->adjust();
 }
 
@@ -158,4 +170,9 @@ QString Node::node_name() const
  void Node::add_successor_edge(Edge* arc)
  {
     successor_edges.append(arc);
+ }
+ // a method to delete a successor edge
+ void Node::delete_successor_edge(Edge* arc)
+ {
+     successor_edges.removeOne(arc);
  }
