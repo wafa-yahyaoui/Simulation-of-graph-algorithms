@@ -16,7 +16,7 @@ public:
     void addEdge(Edge *edge); // dessin +algo
     void dellEdge(Edge *edge); // dessin +algo
     QList<Edge *> edges() const;
-    void
+
 
     enum { Type = UserType + 1 };
     int type() const Q_DECL_OVERRIDE { return Type; }
@@ -41,6 +41,8 @@ public:
     QList<Edge *> accessor_successor_edges() const;
     // add successor edge to use in algorithms
     void add_successor_edge(Edge* arc);
+    // a method to delete a successor edge
+    void delete_successor_edge(Edge* arc);
     void setState(int s){active=s;}; // to be used in dijkstra algorithme
     void setExplored(bool state){explored=state;}; // to be used in bfs; dfs algorithmes
     bool isExplored(){return explored;};// to be used in bfs;dfs algorithmes

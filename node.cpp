@@ -37,7 +37,7 @@ Node* Node::node_pointer()
 }
 
 
-void Node::addEdge(Edge *edge)
+void Node::addEdge(Edge *edge) // dessin
 {
     edgeList << edge;
     edge->adjust();
@@ -170,4 +170,9 @@ QString Node::node_name() const
  void Node::add_successor_edge(Edge* arc)
  {
     successor_edges.append(arc);
+ }
+ // a method to delete a successor edge
+ void Node::delete_successor_edge(Edge* arc)
+ {
+     successor_edges.removeOne(arc);
  }

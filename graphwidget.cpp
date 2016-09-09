@@ -36,6 +36,14 @@ node->setPos(0,0);
 void GraphWidget::delete_edge(QString source_edge_to_delete ,QString destination_edge_to_delete)
 {
     Edge* pointer_edge_delete=find_edge_pointer(source_edge_to_delete,destination_edge_to_delete);
+graph_edges.removeOne(pointer_edge_delete);
+find_pointer(source_edge_to_delete)->delete_successor_node(find_pointer(destination_edge_to_delete));
+find_pointer(source_edge_to_delete)->dellEdge(pointer_edge_delete);
+find_pointer(destination_edge_to_delete)->dellEdge(pointer_edge_delete);
+find_pointer(source_edge_to_delete)->delete_successor_edge(pointer_edge_delete);
+scene_att->removeItem(pointer_edge_delete);
+delete pointer_edge_delete;
+pointer_edge_delete=NULL;
 
 
 }
