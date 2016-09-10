@@ -1,4 +1,5 @@
 #include "window.h"
+
 window::window():QMainWindow()
 {
     // ===== Show the graph as central widget =======
@@ -13,6 +14,8 @@ QAction *add_an_edge= new QAction("Add edge", this);
         menu->addAction(add_an_edge);
 QAction *delete_an_edge= new QAction("Delete edge", this);
                 menu->addAction(delete_an_edge);
+QAction *delete_a_node= new QAction("Delete node", this);
+                                menu->addAction(delete_a_node);
 QAction *shortest_path= new QAction("Shortest path : Dijksta algorithm", this);
             menu->addAction(shortest_path);
 QAction *BFS= new QAction("Breadth First Search", this);
@@ -27,6 +30,7 @@ quit_application->setShortcut(QKeySequence("Ctrl+Q"));
 add_a_node->setShortcut(QKeySequence("Ctrl+N"));
 add_an_edge->setShortcut(QKeySequence("Ctrl+E"));
 delete_an_edge->setShortcut(QKeySequence("Ctrl+L"));
+delete_a_node->setShortcut(QKeySequence("Ctrl+O"));
 shortest_path->setShortcut(QKeySequence("Ctrl+D"));
 BFS->setShortcut(QKeySequence("Ctrl+B"));
 DFS->setShortcut(QKeySequence("Ctrl+F"));
@@ -40,9 +44,11 @@ connect(DFS, &QAction::triggered, this, &window::open_window_dfs_algorithm);
 connect(add_an_edge, &QAction::triggered, this, &window::open_window_add_edge);
 connect(shortest_path, &QAction::triggered, this, &window::open_window_dijkstra_algorithm);
 connect(delete_an_edge, &QAction::triggered, this, &window::open_window_delete_edge);
+connect(delete_a_node, &QAction::triggered, this, &window::open_window_delete_node);
 }
 //==============generer les slots===================
-void window::open_window_add_node()//windo to  Add new node
+//*********************** add a node *********************
+void window::open_window_add_node()
 {
     bool ok = false;
   QString new_node = QInputDialog::getText(this, "Add new node", "type new node's name",QLineEdit::Normal, QString(),&ok);
@@ -230,4 +236,27 @@ void window::open_window_delete_edge()
 
 }
 
+//********************** delete node ****************
+void window::open_window_delete_node()
+{
+    bool ok = false;
+    QString node_to_delete = QInputDialog::getText(this, "Delete node", "type the name of node to delete, you have to remove all incoming and outgoing edges first ",QLineEdit::Normal, QString(),&ok);
+  if (ok && !node_to_delete.isEmpty() &&  existing_name_nodes.contains(node_to_delete))
+   {
+      if (!graph->connected_node(node_to_delete))
+      {
+          existing_name_nodes.removeOne(node_to_delete);
+          graph->delete_node(node_to_delete);
 
+      }
+    else
+      {
+          QMessageBox::critical(this, "Remove edges", "Node still have outgoing or incoming edges ");
+      }
+
+    }
+  else if(ok && !node_to_delete.isEmpty() && !existing_name_nodes.contains(node_to_delete))
+  {
+      QMessageBox::critical(this, "Node not found", "Node not found , try again !");
+  }
+}

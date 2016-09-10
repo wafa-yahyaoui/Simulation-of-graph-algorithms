@@ -31,7 +31,28 @@ void GraphWidget::add_node(QString name)
     nodeText->setHtml(QString("<div style='background:rgba(255, 255, 255, 100%);'><b>" + QString(node->node_name()) + QString("</b></div>") ));
 scene_att->addItem(node);
 node->setPos(0,0);
+update();
 }
+// Deleting a node
+void GraphWidget::delete_node(QString name_node_to_delete)
+{
+
+    Node* p = find_pointer(name_node_to_delete);
+   graph_algo.removeOne(p);
+    scene_att->removeItem(p);
+    delete p;
+update();
+}
+
+// adding an edge
+void GraphWidget::add_edge(QString name_source, QString name_destination, double weight)
+{
+    Edge *edge = new Edge(find_pointer(name_source), find_pointer(name_destination),weight);
+    scene_att->addItem(edge);
+    graph_edges.append(edge);
+    update();
+}
+
 // a methode that delete an edge given the source node and destination node (after verification )
 void GraphWidget::delete_edge(QString source_edge_to_delete ,QString destination_edge_to_delete)
 {
@@ -44,7 +65,7 @@ find_pointer(source_edge_to_delete)->delete_successor_edge(pointer_edge_delete);
 scene_att->removeItem(pointer_edge_delete);
 delete pointer_edge_delete;
 pointer_edge_delete=NULL;
-
+update();
 
 }
 
@@ -111,14 +132,20 @@ bool GraphWidget::verify_edge_existence(QString name_source, QString name_destin
            (*it)->setState(0);
        }
    }
-
-// adding an edge
-void GraphWidget::add_edge(QString name_source, QString name_destination, double weight)
-{
-    Edge *edge = new Edge(find_pointer(name_source), find_pointer(name_destination),weight);
-    scene_att->addItem(edge);
-    graph_edges.append(edge);
-}
+   //a method that verifies if a node is still connected
+   bool GraphWidget::connected_node(QString node)
+   {
+       bool b =false;
+       for(QList<Edge*>::iterator it= graph_edges.begin();it!=graph_edges.end();++it)
+       {
+           if (((*it)->destNode()->node_name().compare(node)==0) ||((*it)->sourceNode()->node_name().compare(node)==0))
+           {
+               b=true;
+               break;
+           }
+       }
+       return b ;
+   }
 
 
 void GraphWidget::itemMoved()
