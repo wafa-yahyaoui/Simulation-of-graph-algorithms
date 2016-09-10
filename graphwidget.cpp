@@ -50,6 +50,7 @@ void GraphWidget::add_edge(QString name_source, QString name_destination, double
     Edge *edge = new Edge(find_pointer(name_source), find_pointer(name_destination),weight);
     scene_att->addItem(edge);
     graph_edges.append(edge);
+    graph_costs.append(weight);
     update();
 }
 
@@ -63,6 +64,8 @@ find_pointer(source_edge_to_delete)->dellEdge(pointer_edge_delete);
 find_pointer(destination_edge_to_delete)->dellEdge(pointer_edge_delete);
 find_pointer(source_edge_to_delete)->delete_successor_edge(pointer_edge_delete);
 scene_att->removeItem(pointer_edge_delete);
+double cost=pointer_edge_delete->edge_cost();
+graph_costs.removeOne(cost);
 delete pointer_edge_delete;
 pointer_edge_delete=NULL;
 update();
@@ -147,6 +150,20 @@ bool GraphWidget::verify_edge_existence(QString name_source, QString name_destin
        return b ;
    }
 
+   // method to verify existance of negative costs : dijkstra algo
+   bool GraphWidget::negative_costs()
+   {
+       bool b=false;
+       for(QList<double>::iterator it=graph_costs.begin();it!= graph_costs.end();++it)
+       {
+           if (*it < 0)
+           {
+               b=true;
+               break;
+           }
+       }
+       return b ;
+   }
 
 void GraphWidget::itemMoved()
 {

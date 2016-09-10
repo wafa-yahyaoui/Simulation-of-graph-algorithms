@@ -68,15 +68,8 @@ void window::open_window_dijkstra_algorithm()
     {
         QString origine_node;
         QString destination_node;
-        bool positifs_costs =true;
-        for(QList<double>::iterator it=cost_edges.begin();it!= cost_edges.end() && positifs_costs;it++)
-        {
-            if (*it < 0)
-            {
-                positifs_costs=false;
-            }
-        }
-        if (!positifs_costs)
+
+        if (graph->negative_costs())
         {
            QMessageBox::critical(this, "Negatif Cost", "You can not use Dijkstra Algorithm on a graph containing edges with negatif costes !");
         }
@@ -144,19 +137,33 @@ void window::open_window_add_edge()
       destination_node = QInputDialog::getText(this, "ADD EDGE", "Type the name of destination node",QLineEdit::Normal, QString(),&ok);
       if (ok && !destination_node.isEmpty() &&existing_name_nodes.contains(destination_node) && (origine_node.compare(destination_node) != 0))
       {
-          ok=false;
-           edge_cost_string = QInputDialog::getText(this, "ADD EDGE", "Type the cost of edge",QLineEdit::Normal, "00.00",&ok);
-           edge_cost=edge_cost_string.toDouble(&convert);
-               if (ok && !edge_cost_string.isEmpty() && convert)
-          {
-                   graph->add_edge(origine_node,destination_node,edge_cost);
-                   cost_edges.append(edge_cost);
 
+          if(!graph->verify_edge_existence(origine_node,destination_node))
+          {
+              ok=false;
+               edge_cost_string = QInputDialog::getText(this, "ADD EDGE", "Type the cost of edge",QLineEdit::Normal, "00.00",&ok);
+               edge_cost=edge_cost_string.toDouble(&convert);
+                   if (ok && !edge_cost_string.isEmpty() && convert)
+              {
+                       graph->add_edge(origine_node,destination_node,edge_cost);
+                       cost_edges.append(edge_cost);
+
+              }
+                  else if (ok && !edge_cost_string.isEmpty() && !convert)
+                   {
+                       QMessageBox::critical(this, "Cost not a number ", "Enter a valid number please !");
+                   }
+
+
+      }
+          else
+          {
+               QMessageBox::critical(this, "Existing Edge ", "Already existing edge between origine and destination you have chosen !");
           }
-              else if (ok && !edge_cost_string.isEmpty() && !convert)
-               {
-                   QMessageBox::critical(this, "Cost not a number ", "Enter a valid number please !");
-               }
+
+
+
+
 
 
       }
@@ -210,7 +217,9 @@ void window::open_window_delete_edge()
           if(graph->verify_edge_existence(origine_edge_to_delete,destination_edge_to_delete))
           {
              graph->delete_edge(origine_edge_to_delete,destination_edge_to_delete);
+             update();
       }
+
           else
           {
                QMessageBox::critical(this, "No Edge ", "No Edge between chosen nodes !");

@@ -39,6 +39,8 @@ void delete_node(QString name_node_to_delete);
 
 //a method that verifies if a node is still connected
 bool connected_node(QString node);
+// method to verify existance of negative costs : dijkstra algo
+bool negative_costs();
 //+++++++++++++++ LES ALGORITHMES ++++++++++++++++++
     // 1) Dijikstra algorithmes
     void dijkstra (QString name_first_node,QString name_second_node);
@@ -68,6 +70,7 @@ private:
     // adding other  implementations of the graph to be used in algorthms
     QList<Node*> graph_algo;
     QList<Edge*> graph_edges; // containes all the graph edges
+    QList<double> graph_costs;
     //===== attributes to be used in simulation
     QString minDistance(QMap<QString,double> dist,QMap<QString,bool> sptSet);
 };
