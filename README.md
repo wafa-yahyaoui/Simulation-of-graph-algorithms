@@ -1,2 +1,5 @@
-# summer_poject
-Simulation of graph algorithms
+# Context
+Simulation of graph algorithms.
+
+# Keywords
+C++, QT
